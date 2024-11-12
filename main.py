@@ -11,7 +11,7 @@ scope = ["https://www.googleapis.com/auth/spreadsheets", "https://www.googleapis
 creds = ServiceAccountCredentials.from_json_keyfile_name("credentials.json", scope)
 client = gspread.authorize(creds)
 ss = client.open('尿/飲水周期管理(腎臓移植)')
-sheet = ss.get_worksheet(0)
+sheet = ss.get_worksheet(1)  # 11/13
 
 
 def dt_to_txt(dt):
@@ -68,12 +68,15 @@ def digest_alarm():
 def main():
     global prev_date
     while 1:
-        digest_alarm()
-        dt = get_next_urination_dt()
-        if dt != prev_date:
-            print('saving', dt)
-            save_alarm(dt)
-            prev_date = dt
+        try:
+            digest_alarm()
+            dt = get_next_urination_dt()
+            if dt != prev_date:
+                print('saving', dt)
+                save_alarm(dt)
+                prev_date = dt
+        except gspread.exceptions.APIError as e:
+            print(str(e))
         time.sleep(1)
 
 
