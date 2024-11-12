@@ -31,8 +31,8 @@ prev_date = None
 
 def save_alarm(dt):
     str_dt = dt_to_txt(dt)
-    with open('alarm.txt', 'a') as f:
-        f.write(str_dt + '\n')
+    with open('alarm.txt', 'w') as f:
+        f.write(str_dt)
 
 
 def get_past_date_indices(dt_ary):
