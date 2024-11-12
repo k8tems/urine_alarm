@@ -55,8 +55,7 @@ def digest_alarm():
         print('past indices', past_indices)
 
         def play_sound():
-            winsound.PlaySound("SystemExit", winsound.SND_ALIAS)
-            # winsound.PlaySound("path_to_your_sound_file.wav", winsound.SND_FILENAME)
+            winsound.PlaySound("alarm.wav", winsound.SND_FILENAME)
 
         thread = threading.Thread(target=play_sound)
         thread.start()
