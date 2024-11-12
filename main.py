@@ -48,18 +48,19 @@ def write_txt_file(f_name, txt):
     Path(f_name).write_text(txt)
 
 
+def play_alarm():
+    def f():
+        winsound.PlaySound("alarm.wav", winsound.SND_FILENAME)
+    thread = threading.Thread(target=f)
+    thread.start()
+
+
 def digest_alarm():
     alarm_dts = [txt_to_dt(a) for a in read_txt_file('alarm.txt').split('\n') if a]
     past_indices = get_past_date_indices(alarm_dts)
     if past_indices:
         print('past indices', past_indices)
-
-        def play_sound():
-            winsound.PlaySound("alarm.wav", winsound.SND_FILENAME)
-
-        thread = threading.Thread(target=play_sound)
-        thread.start()
-
+        play_alarm()
         alarm_dts = [x for i, x in enumerate(alarm_dts) if i not in past_indices]
         write_txt_file('alarm.txt', '\n'.join(dt_to_txt(a) for a in alarm_dts))
 
