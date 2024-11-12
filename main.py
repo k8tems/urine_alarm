@@ -1,4 +1,6 @@
 import time
+import threading
+import winsound
 from pathlib import Path
 import gspread
 from datetime import datetime
@@ -51,7 +53,14 @@ def digest_alarm():
     past_indices = get_past_date_indices(alarm_dts)
     if past_indices:
         print('past indices', past_indices)
-        # play alarm
+
+        def play_sound():
+            winsound.PlaySound("SystemExit", winsound.SND_ALIAS)
+            # winsound.PlaySound("path_to_your_sound_file.wav", winsound.SND_FILENAME)
+
+        thread = threading.Thread(target=play_sound)
+        thread.start()
+
         alarm_dts = [x for i, x in enumerate(alarm_dts) if i not in past_indices]
         write_txt_file('alarm.txt', '\n'.join(dt_to_txt(a) for a in alarm_dts))
 
@@ -62,7 +71,7 @@ def main():
         digest_alarm()
         dt = get_next_urination_dt()
         if dt != prev_date:
-            print(dt)
+            print('saving', dt)
             save_alarm(dt)
             prev_date = dt
         time.sleep(1)
