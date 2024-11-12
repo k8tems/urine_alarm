@@ -23,7 +23,7 @@ def txt_to_dt(txt):
 
 
 def get_next_urination_dt():
-    return txt_to_dt(sheet.acell('B4').value)
+    return txt_to_dt(sheet.acell('C4').value)
 
 
 prev_date = None
@@ -31,7 +31,7 @@ prev_date = None
 
 def save_alarm(dt):
     str_dt = dt_to_txt(dt)
-    with open('alarm.txt', 'w+') as f:
+    with open('alarm.txt', 'a') as f:
         f.write(str_dt + '\n')
 
 
