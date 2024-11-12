@@ -19,13 +19,20 @@ def get_next_urination_dt():
 prev_date = None
 
 
+def save_alarm(dt):
+    str_dt = dt.strftime('%m/%d %H:%M')
+    with open('alarm.txt', 'w+') as f:
+        f.write(str_dt + '\n')
+
+
 def main():
     global prev_date
     while 1:
-        time.sleep(1)
+        time.sleep(3)
         dt = get_next_urination_dt()
         if dt != prev_date:
             print(dt)
+            save_alarm(dt)
             prev_date = dt
 
 
