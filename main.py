@@ -21,9 +21,6 @@ def get_next_urination_dt():
     return txt_to_dt(sheet.acell('C4').value)
 
 
-alarm_dt = None
-
-
 def play_alarm():
     def f():
         winsound.PlaySound("alarm.wav", winsound.SND_FILENAME)
@@ -31,22 +28,35 @@ def play_alarm():
     thread.start()
 
 
-def maybe_update_alarm():
-    global alarm_dt
-    try:
-        dt = get_next_urination_dt()
-        if dt != alarm_dt:
-            alarm_dt = dt
-    except gspread.exceptions.APIError as e:
-        print(str(e))
+class Alarm:
+    def __init__(self, dt):
+        # only play once for now(maybe a counter in the future?)
+        self.played = False
+        self.dt = dt
+
+    def play(self):
+        if not self.played:
+            play_alarm()
+
+    def __lt__(self, now):
+        return self.dt < now
+
+
+class NullAlarm:
+    def play(self):
+        pass
 
 
 def main():
-    global alarm_dt
+    alarm_dt = NullAlarm()
     while 1:
-        maybe_update_alarm()
-        if alarm_dt and datetime.now() > alarm_dt:
-            play_alarm()
+        try:
+            # 毎回更新するのでOK
+            alarm_dt = Alarm(get_next_urination_dt())
+        except gspread.exceptions.APIError as e:
+            print(str(e))
+        if alarm_dt < datetime.now():
+            alarm_dt.play()
         time.sleep(10)
 
 
