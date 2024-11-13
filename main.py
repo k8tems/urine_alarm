@@ -28,9 +28,6 @@ def play_alarm():
 
 
 class NullAlarm:
-    def __init__(self):
-        self.dt = datetime(1970, 1, 1)
-
     def __ne__(self, other):
         return True
 
