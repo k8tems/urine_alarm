@@ -10,7 +10,7 @@ scope = ["https://www.googleapis.com/auth/spreadsheets", "https://www.googleapis
 creds = ServiceAccountCredentials.from_json_keyfile_name("credentials.json", scope)
 client = gspread.authorize(creds)
 ss = client.open('尿/飲水周期管理(腎臓移植)')
-sheet = ss.get_worksheet(1)  # 11/13
+sheet = ss.get_worksheet(2)  # 11/14
 
 
 def txt_to_dt(txt):
