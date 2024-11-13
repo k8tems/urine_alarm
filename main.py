@@ -48,15 +48,15 @@ class NullAlarm:
 
 
 def main():
-    alarm_dt = NullAlarm()
+    alarm = NullAlarm()
     while 1:
         try:
             # 毎回更新するのでOK
-            alarm_dt = Alarm(get_next_urination_dt())
+            alarm = Alarm(get_next_urination_dt())
         except gspread.exceptions.APIError as e:
             print(str(e))
-        if alarm_dt < datetime.now():
-            alarm_dt.play()
+        if alarm < datetime.now():
+            alarm.play()
         time.sleep(10)
 
 
