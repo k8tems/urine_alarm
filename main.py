@@ -6,6 +6,7 @@ from datetime import datetime
 from oauth2client.service_account import ServiceAccountCredentials
 
 
+NEXT_URINE_CELL = 'C4'
 scope = ["https://www.googleapis.com/auth/spreadsheets", "https://www.googleapis.com/auth/drive"]
 creds = ServiceAccountCredentials.from_json_keyfile_name("credentials.json", scope)
 client = gspread.authorize(creds)
@@ -17,7 +18,7 @@ def txt_to_dt(txt):
 
 
 def get_next_urination_dt(sheet):
-    return txt_to_dt(sheet.acell('C4').value)
+    return txt_to_dt(sheet.acell(NEXT_URINE_CELL).value)
 
 
 def play_alarm():
