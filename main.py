@@ -47,6 +47,7 @@ class Alarm:
 
     def play(self):
         if self.num_played < 10:
+            print('playing alarm', self.num_played)
             play_alarm()
             self.num_played += 1
 
