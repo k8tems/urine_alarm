@@ -28,6 +28,17 @@ def play_alarm():
     thread.start()
 
 
+class NullAlarm:
+    def __init__(self):
+        self.dt = datetime(1970, 1, 1)
+
+    def __ne__(self, other):
+        return True
+
+    def __lt__(self, other):
+        return True
+
+
 class Alarm:
     def __init__(self, dt):
         # only play once for now(maybe a counter in the future?)
@@ -37,21 +48,28 @@ class Alarm:
     def play(self):
         if not self.played:
             play_alarm()
+            self.played = True
+
+    def __ne__(self, other):
+        return self.dt != other.dt
 
     def __lt__(self, now):
         return self.dt < now
 
 
 def main():
+    alarm = NullAlarm()
     while 1:
         try:
-            # 毎回更新するのでOK
-            alarm = Alarm(get_next_urination_dt())
+            new_alarm = Alarm(get_next_urination_dt())
+            if alarm != new_alarm:
+                print('setting new alarm')
+                alarm = new_alarm
             if alarm < datetime.now():
                 alarm.play()
         except gspread.exceptions.APIError as e:
             print(str(e))
-        time.sleep(10)
+        time.sleep(1)
 
 
 if __name__ == "__main__":
