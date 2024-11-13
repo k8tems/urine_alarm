@@ -56,6 +56,9 @@ class Alarm:
     def __lt__(self, now):
         return self.dt < now
 
+    def __repr__(self):
+        return str(self.dt)
+
 
 def main():
     alarm = NullAlarm()
@@ -63,13 +66,13 @@ def main():
         try:
             new_alarm = Alarm(get_next_urination_dt())
             if alarm != new_alarm:
-                print('setting new alarm')
+                print('setting new alarm', new_alarm)
                 alarm = new_alarm
             if alarm < datetime.now():
                 alarm.play()
         except gspread.exceptions.APIError as e:
             print(str(e))
-        time.sleep(1)
+        time.sleep(10)
 
 
 if __name__ == "__main__":
