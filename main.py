@@ -42,21 +42,15 @@ class Alarm:
         return self.dt < now
 
 
-class NullAlarm:
-    def play(self):
-        pass
-
-
 def main():
-    alarm = NullAlarm()
     while 1:
         try:
             # 毎回更新するのでOK
             alarm = Alarm(get_next_urination_dt())
+            if alarm < datetime.now():
+                alarm.play()
         except gspread.exceptions.APIError as e:
             print(str(e))
-        if alarm < datetime.now():
-            alarm.play()
         time.sleep(10)
 
 
