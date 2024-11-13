@@ -42,13 +42,13 @@ class NullAlarm:
 class Alarm:
     def __init__(self, dt):
         # only play once for now(maybe a counter in the future?)
-        self.played = False
+        self.num_played = 0
         self.dt = dt
 
     def play(self):
-        if not self.played:
+        if self.num_played < 10:
             play_alarm()
-            self.played = True
+            self.num_played += 1
 
     def __ne__(self, other):
         return self.dt != other.dt
