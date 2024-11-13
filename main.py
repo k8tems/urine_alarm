@@ -10,14 +10,13 @@ scope = ["https://www.googleapis.com/auth/spreadsheets", "https://www.googleapis
 creds = ServiceAccountCredentials.from_json_keyfile_name("credentials.json", scope)
 client = gspread.authorize(creds)
 ss = client.open('尿/飲水周期管理(腎臓移植)')
-sheet = ss.get_worksheet(2)  # 11/14
 
 
 def txt_to_dt(txt):
     return datetime.strptime(txt, '%m/%d %H:%M').replace(year=2024)
 
 
-def get_next_urination_dt():
+def get_next_urination_dt(sheet):
     return txt_to_dt(sheet.acell('C4').value)
 
 
@@ -64,8 +63,10 @@ class Alarm:
 def main():
     alarm = NullAlarm()
     while 1:
+        worksheet_title = datetime.now().strftime('%m/%d')
+        sheet = ss.worksheet(worksheet_title)
         try:
-            new_alarm = Alarm(get_next_urination_dt())
+            new_alarm = Alarm(get_next_urination_dt(sheet))
             if alarm != new_alarm:
                 print('setting new alarm', new_alarm)
                 alarm = new_alarm
