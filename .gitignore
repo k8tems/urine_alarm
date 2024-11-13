@@ -3,3 +3,4 @@ credentials.json
 venv/
 alarm.wav
 alarm.txt
+__pycache__
