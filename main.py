@@ -1,5 +1,4 @@
 import time
-import requests
 import threading
 import winsound
 import gspread
