@@ -1,4 +1,5 @@
 import time
+import requests
 import threading
 import winsound
 import gspread
@@ -70,7 +71,8 @@ def main():
                 alarm = new_alarm
             if alarm < datetime.now():
                 alarm.play()
-        except gspread.exceptions.APIError as e:
+        # エラーを限定してる余裕ないので全部キャッチして表示する
+        except Exception as e:
             print(str(e))
         time.sleep(10)
 
