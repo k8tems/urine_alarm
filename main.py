@@ -1,4 +1,5 @@
 import time
+import keyboard
 import threading
 import winsound
 import gspread
@@ -35,15 +36,19 @@ class NullAlarm:
     def __lt__(self, other):
         return True
 
+    def stop(self):
+        pass
+
 
 class Alarm:
     def __init__(self, dt):
         # only play once for now(maybe a counter in the future?)
         self.num_played = 0
         self.dt = dt
+        self.stopped = False
 
     def play(self):
-        if self.num_played < 10:
+        if not self.stopped and self.num_played < 10:
             print('playing alarm', self.num_played)
             play_alarm()
             self.num_played += 1
@@ -57,9 +62,21 @@ class Alarm:
     def __repr__(self):
         return str(self.dt)
 
+    def stop(self):
+        self.stopped = True
+
+
+def cancel_alarm():
+    print('stopping alarm')
+    alarm.stop()
+
+
+alarm = NullAlarm()
+
 
 def main():
-    alarm = NullAlarm()
+    global alarm
+    keyboard.add_hotkey('esc', cancel_alarm)
     while 1:
         worksheet_title = datetime.now().strftime('%m/%d')
         try:
