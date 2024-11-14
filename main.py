@@ -6,7 +6,7 @@ from datetime import datetime
 from oauth2client.service_account import ServiceAccountCredentials
 
 
-NEXT_URINE_CELL = 'C4'
+NEXT_URINE_CELL = 'K6'
 scope = ["https://www.googleapis.com/auth/spreadsheets", "https://www.googleapis.com/auth/drive"]
 creds = ServiceAccountCredentials.from_json_keyfile_name("credentials.json", scope)
 client = gspread.authorize(creds)
@@ -62,8 +62,8 @@ def main():
     alarm = NullAlarm()
     while 1:
         worksheet_title = datetime.now().strftime('%m/%d')
-        sheet = ss.worksheet(worksheet_title)
         try:
+            sheet = ss.worksheet(worksheet_title)
             new_alarm = Alarm(get_next_urination_dt(sheet))
             if alarm != new_alarm:
                 print('setting new alarm', new_alarm)
