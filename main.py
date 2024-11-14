@@ -7,10 +7,13 @@ from oauth2client.service_account import ServiceAccountCredentials
 
 
 NEXT_URINE_CELL = 'K6'
-scope = ["https://www.googleapis.com/auth/spreadsheets", "https://www.googleapis.com/auth/drive"]
-creds = ServiceAccountCredentials.from_json_keyfile_name("credentials.json", scope)
-client = gspread.authorize(creds)
-ss = client.open('尿/飲水周期管理(腎臓移植)')
+
+
+def get_spread_sheet(title):
+    scope = ["https://www.googleapis.com/auth/spreadsheets", "https://www.googleapis.com/auth/drive"]
+    creds = ServiceAccountCredentials.from_json_keyfile_name("credentials.json", scope)
+    client = gspread.authorize(creds)
+    return client.open(title)
 
 
 def txt_to_dt(txt):
@@ -62,6 +65,9 @@ class Alarm:
         self.stopped = True
 
 
+alarm = NullAlarm()
+
+
 def stop_alarm():
     print('stopping alarm')
     global alarm
@@ -70,13 +76,11 @@ def stop_alarm():
     winsound.PlaySound(None, winsound.SND_ASYNC)
 
 
-alarm = NullAlarm()
-
-
 def main():
     global alarm
     keyboard.add_hotkey('esc', stop_alarm)
     while 1:
+        ss = get_spread_sheet('尿/飲水周期管理(腎臓移植)')
         worksheet_title = datetime.now().strftime('%m/%d')
         try:
             sheet = ss.worksheet(worksheet_title)
