@@ -6,6 +6,7 @@ from datetime import datetime
 from oauth2client.service_account import ServiceAccountCredentials
 
 
+SPREAD_TITLE = '尿/飲水周期管理(腎臓移植)'
 NEXT_URINE_CELL = 'K6'
 
 
@@ -80,7 +81,7 @@ def main():
     global alarm
     keyboard.add_hotkey('esc', stop_alarm)
     while 1:
-        ss = get_spread_sheet('尿/飲水周期管理(腎臓移植)')
+        ss = get_spread_sheet(SPREAD_TITLE)
         worksheet_title = datetime.now().strftime('%m/%d')
         try:
             sheet = ss.worksheet(worksheet_title)
