@@ -1,6 +1,5 @@
 import time
 import keyboard
-import threading
 import winsound
 import gspread
 from datetime import datetime
@@ -23,10 +22,7 @@ def get_next_urination_dt(sheet):
 
 
 def play_alarm():
-    def f():
-        winsound.PlaySound("alarm.wav", winsound.SND_FILENAME)
-    thread = threading.Thread(target=f)
-    thread.start()
+    winsound.PlaySound("alarm.wav", winsound.SND_FILENAME | winsound.SND_ASYNC)
 
 
 class NullAlarm:
@@ -66,9 +62,12 @@ class Alarm:
         self.stopped = True
 
 
-def cancel_alarm():
+def stop_alarm():
     print('stopping alarm')
+    global alarm
     alarm.stop()
+    # Play null sound to stop the current one playing
+    winsound.PlaySound(None, winsound.SND_ASYNC)
 
 
 alarm = NullAlarm()
@@ -76,7 +75,7 @@ alarm = NullAlarm()
 
 def main():
     global alarm
-    keyboard.add_hotkey('esc', cancel_alarm)
+    keyboard.add_hotkey('esc', stop_alarm)
     while 1:
         worksheet_title = datetime.now().strftime('%m/%d')
         try:
