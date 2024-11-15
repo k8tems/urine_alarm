@@ -77,14 +77,27 @@ def stop_alarm():
     winsound.PlaySound(None, winsound.SND_ASYNC)
 
 
+def is_urination_dt_valid(sheet):
+    try:
+        return sheet.acell(NEXT_URINE_CELL).value is not None
+    except ValueError:
+        return False
+
+
 def main():
+    from datetime import timedelta
     global alarm
     keyboard.add_hotkey('esc', stop_alarm)
     while 1:
-        ss = get_spread_sheet(SPREAD_TITLE)
-        worksheet_title = datetime.now().strftime('%m/%d')
         try:
+            # TODO: integration test
+            ss = get_spread_sheet(SPREAD_TITLE)
+            now = datetime.now()
+            worksheet_title = now.strftime('%m/%d')
             sheet = ss.worksheet(worksheet_title)
+            if not is_urination_dt_valid(sheet):
+                worksheet_title = (now - timedelta(days=1)).strftime('%m/%d')
+                sheet = ss.worksheet(worksheet_title)
             new_alarm = Alarm(get_next_urination_dt(sheet))
             if alarm != new_alarm:
                 print('setting new alarm', new_alarm)
