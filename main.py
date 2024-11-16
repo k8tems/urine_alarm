@@ -85,6 +85,12 @@ def is_urination_dt_valid(sheet):
 
 
 def get_sheet(spread, now):
+    """
+    今回のループで使うシートを返す処理
+    出来れば現在の日付に当たるシートを使いたいが、
+    日付が丁度変わったタイミングで最新のシートに何もデータが無いと尿の日付に値がセットされてない
+    値の取得が無理な場合は前日のスプシの「次の尿時間」を利用する為、前日のスプシを返す
+    """
     def get_worksheet_title(dt):
         return dt.strftime('%m/%d')
 
