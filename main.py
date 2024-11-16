@@ -45,6 +45,9 @@ class NullAlarm:
     def __lt__(self, other):
         return True
 
+    def play(self):
+        pass
+
     def stop(self):
         pass
 
@@ -130,6 +133,7 @@ def main():
         # エラーを限定してる余裕ないので全部キャッチして表示する
         except Exception as e:
             print(str(e))
+            alarm.play()
         time.sleep(10)
 
 
