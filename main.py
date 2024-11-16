@@ -1,4 +1,6 @@
 import time
+import yaml
+import requests
 import keyboard
 import winsound
 import gspread
@@ -6,8 +8,15 @@ from datetime import datetime, timedelta
 from oauth2client.service_account import ServiceAccountCredentials
 
 
-SPREAD_TITLE = '尿/飲水周期管理(腎臓移植)'
-NEXT_URINE_CELL = 'K6'
+def load_yaml():
+    with open('config.yaml') as f:
+        return yaml.safe_load(f)
+
+
+cfg = load_yaml()
+IFTTT_URL = cfg['ifttt_url']
+SPREAD_TITLE = cfg['spread_title']
+NEXT_URINE_CELL = cfg['next_urine_cell']
 
 
 def get_spread_sheet(title):
@@ -40,6 +49,10 @@ class NullAlarm:
         pass
 
 
+def alert_phone():
+    requests.post(IFTTT_URL)
+
+
 class Alarm:
     def __init__(self, dt):
         # only play once for now(maybe a counter in the future?)
@@ -50,6 +63,7 @@ class Alarm:
     def play(self):
         if not self.stopped and self.num_played < 10:
             print('playing alarm', self.num_played)
+            alert_phone()
             play_alarm()
             self.num_played += 1
 

@@ -4,3 +4,4 @@ venv/
 alarm.wav
 alarm.txt
 __pycache__
+config.yaml
