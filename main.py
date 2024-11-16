@@ -2,7 +2,7 @@ import time
 import keyboard
 import winsound
 import gspread
-from datetime import datetime
+from datetime import datetime, timedelta
 from oauth2client.service_account import ServiceAccountCredentials
 
 
@@ -84,25 +84,27 @@ def is_urination_dt_valid(sheet):
         return False
 
 
+def get_sheet(spread, now):
+    worksheet_title = now.strftime('%m/%d')
+    sheet = spread.worksheet(worksheet_title)
+    if not is_urination_dt_valid(sheet):
+        worksheet_title = (now - timedelta(days=1)).strftime('%m/%d')
+        sheet = spread.worksheet(worksheet_title)
+    return sheet
+
+
 def main():
-    from datetime import timedelta
     global alarm
     keyboard.add_hotkey('esc', stop_alarm)
     while 1:
         try:
             # TODO: integration test
-            ss = get_spread_sheet(SPREAD_TITLE)
             now = datetime.now()
-            worksheet_title = now.strftime('%m/%d')
-            sheet = ss.worksheet(worksheet_title)
-            if not is_urination_dt_valid(sheet):
-                worksheet_title = (now - timedelta(days=1)).strftime('%m/%d')
-                sheet = ss.worksheet(worksheet_title)
-            new_alarm = Alarm(get_next_urination_dt(sheet))
+            new_alarm = Alarm(get_next_urination_dt(get_sheet(get_spread_sheet(SPREAD_TITLE), now)))
             if alarm != new_alarm:
                 print('setting new alarm', new_alarm)
                 alarm = new_alarm
-            if alarm < datetime.now():
+            if alarm < now:
                 alarm.play()
         # エラーを限定してる余裕ないので全部キャッチして表示する
         except Exception as e:
