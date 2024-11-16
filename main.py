@@ -84,7 +84,7 @@ def is_urination_dt_valid(sheet):
         return False
 
 
-def get_sheet(spread, now):
+def get_worksheet(spread, now):
     """
     今回のループで使うシートを返す処理
     出来れば現在の日付に当たるシートを使いたいが、
@@ -107,7 +107,7 @@ def main():
         try:
             # TODO: integration test
             now = datetime.now()
-            new_alarm = Alarm(get_next_urination_dt(get_sheet(get_spread_sheet(SPREAD_TITLE), now)))
+            new_alarm = Alarm(get_next_urination_dt(get_worksheet(get_spread_sheet(SPREAD_TITLE), now)))
             if alarm != new_alarm:
                 print('setting new alarm', new_alarm)
                 alarm = new_alarm
