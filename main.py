@@ -85,11 +85,12 @@ def is_urination_dt_valid(sheet):
 
 
 def get_sheet(spread, now):
-    worksheet_title = now.strftime('%m/%d')
-    sheet = spread.worksheet(worksheet_title)
+    def get_worksheet_title(dt):
+        return dt.strftime('%m/%d')
+
+    sheet = spread.worksheet(get_worksheet_title(now))
     if not is_urination_dt_valid(sheet):
-        worksheet_title = (now - timedelta(days=1)).strftime('%m/%d')
-        sheet = spread.worksheet(worksheet_title)
+        sheet = spread.worksheet(get_worksheet_title(now - timedelta(days=1)))
     return sheet
 
 
