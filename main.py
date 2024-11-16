@@ -9,7 +9,7 @@ from oauth2client.service_account import ServiceAccountCredentials
 
 
 def load_yaml():
-    with open('config.yaml') as f:
+    with open('config.yaml', encoding='utf8') as f:
         return yaml.safe_load(f)
 
 
