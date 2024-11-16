@@ -79,7 +79,7 @@ def stop_alarm():
 
 def is_urination_dt_valid(sheet):
     try:
-        return sheet.acell(NEXT_URINE_CELL).value is not None
+        return sheet.acell(NEXT_URINE_CELL).value != '#N/A'
     except ValueError:
         return False
 
