@@ -2,7 +2,6 @@ import time
 import yaml
 import requests
 import keyboard
-import winsound
 import gspread
 import psutil
 from datetime import datetime, timedelta
@@ -37,10 +36,6 @@ def txt_to_dt(txt):
 
 def get_next_urination_dt(sheet):
     return txt_to_dt(sheet.acell(NEXT_URINE_CELL).value)
-
-
-def play_alarm():
-    winsound.PlaySound("alarm.wav", winsound.SND_FILENAME | winsound.SND_ASYNC)
 
 
 class NullAlarm:
