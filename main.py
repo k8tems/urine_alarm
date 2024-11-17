@@ -131,7 +131,6 @@ def main():
         # エラーを限定してる余裕ないので全部キャッチして表示する
         except Exception as e:
             print(str(e))
-            alarm.play()
         time.sleep(10)
 
 
