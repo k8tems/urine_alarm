@@ -72,7 +72,6 @@ class Alarm:
         if not self.stopped and self.num_played < 10:
             print('playing alarm', self.num_played)
             alert_phone()
-            play_alarm()
             self.num_played += 1
 
     def __ne__(self, other):
@@ -95,8 +94,6 @@ def stop_alarm():
     print('stopping alarm')
     global alarm
     alarm.stop()
-    # Play null sound to stop the current one playing
-    winsound.PlaySound(None, winsound.SND_ASYNC)
 
 
 def is_urination_dt_valid(sheet):
