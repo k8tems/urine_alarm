@@ -30,6 +30,10 @@ def get_remaining_battery():
     return psutil.sensors_battery().percent
 
 
+def power_charged():
+    return psutil.sensors_battery().power_plugged
+
+
 def txt_to_dt(txt):
     return datetime.strptime(txt, '%m/%d %H:%M').replace(year=2024)
 
@@ -126,7 +130,7 @@ def main():
                 print('setting new alarm', new_alarm)
                 alarm = new_alarm
             # バッテリー切れたらプログラム止まって詰むのでそのケースでも起こすようにする
-            if (alarm < now) or (get_remaining_battery() < 20):
+            if (alarm < now) or ((not power_charged()) and (get_remaining_battery() < 20)):
                 alarm.play()
         # エラーを限定してる余裕ないので全部キャッチして表示する
         except Exception as e:
