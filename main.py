@@ -4,6 +4,7 @@ import requests
 import keyboard
 import winsound
 import gspread
+import psutil
 from datetime import datetime, timedelta
 from oauth2client.service_account import ServiceAccountCredentials
 
@@ -24,6 +25,10 @@ def get_spread_sheet(title):
     creds = ServiceAccountCredentials.from_json_keyfile_name("credentials.json", scope)
     client = gspread.authorize(creds)
     return client.open(title)
+
+
+def get_remaining_battery():
+    return psutil.sensors_battery().percent
 
 
 def txt_to_dt(txt):
@@ -128,7 +133,8 @@ def main():
             if alarm != new_alarm:
                 print('setting new alarm', new_alarm)
                 alarm = new_alarm
-            if alarm < now:
+            # バッテリー切れたらプログラム止まって詰むのでそのケースでも起こすようにする
+            if (alarm < now) or (get_remaining_battery() < 20):
                 alarm.play()
         # エラーを限定してる余裕ないので全部キャッチして表示する
         except Exception as e:
