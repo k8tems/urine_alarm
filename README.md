@@ -6,8 +6,8 @@
 退院後スプシ抜いてiPhone単体で動くアプリにパッケージ化予定  
 
 - 必要な物
-  - google sheetsを操作する為の`credentials.json`
-  - ifttt_urlが設定された`config.yaml`
+  - google sheetsにアクセスする為の`credentials.json`
+  - ifttt_urlが設定された`config.yaml`(`sample_config.yaml`参照)
   - 好きなアラーム音のalarm.wav
   10回鳴らされる
 
