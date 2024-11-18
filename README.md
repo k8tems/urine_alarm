@@ -2,6 +2,8 @@
 
 腎臓移植後、排尿スケジュールといい、24時間1時間に1回トイレに行って腎臓のメンテナンスを行う必要がある  
 対応するスプシのスケジュールを監視しつつ、適宜当スクリプトでアラームの設定を行う  
+アラームはiftttを用いてiPhoneに送信する  
+いずれスプシ抜いてiPhone単体で動くアプリにパッケージ化予定  
 
 - スプシ  
 https://docs.google.com/spreadsheets/d/1uOgZufvXS7L54ccVaeUhFIk7wW665NceGetH2pB2SKo/edit?usp=sharing
