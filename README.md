@@ -7,9 +7,9 @@
 
 - 必要な物
   - google sheetsにアクセスする為の`credentials.json`
-  - ifttt_urlが設定された`config.yaml`(`sample_config.yaml`参照)
-  - 好きなアラーム音のalarm.wav
-  10回鳴らされる
+  - ifttt_urlが設定された`config.yaml`(`sample_config.yaml`参照)  
+  - 好きなアラーム音のalarm.wav  
+  10回鳴らされる  
 
 - スプシ  
 https://docs.google.com/spreadsheets/d/1uOgZufvXS7L54ccVaeUhFIk7wW665NceGetH2pB2SKo/edit?usp=sharing
