@@ -62,7 +62,6 @@ def alert_phone():
 
 class Alarm:
     def __init__(self, dt):
-        # only play once for now(maybe a counter in the future?)
         self.num_played = 0
         self.dt = dt
         self.stopped = False
