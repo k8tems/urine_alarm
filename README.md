@@ -5,6 +5,12 @@
 アラームはiftttを用いて携帯で鳴らす  
 退院後スプシ抜いてiPhone単体で動くアプリにパッケージ化予定  
 
+- 必要な物
+  - google sheetsを操作する為の`credentials.json`
+  - ifttt_urlが設定された`config.yaml`
+  - 好きなアラーム音のalarm.wav
+  10回鳴らされる
+
 - スプシ  
 https://docs.google.com/spreadsheets/d/1uOgZufvXS7L54ccVaeUhFIk7wW665NceGetH2pB2SKo/edit?usp=sharing
 ![](https://gyazo.com/bf6cfce6be43c9b638d753c8af5968f1.j)
